@@ -1,0 +1,105 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{indentfirst} 
+\usepackage{graphicx}
+\usepackage{float}
+\title{PCI Express Technology Comprehensive Guide to Generations 1.x, 2.x, 3.0 电气部分节选}
+\author{徐秉正}
+\date{\today}
+\begin{document}
+\maketitle
+主要是对原书第四部分物理层的翻译工作，对于需要查阅的其他章节内容及拓展知识以附录的方式给出。对一部分内容进行了
+跳过orz。
+\tableofcontents
+
+\section{11 Physical Layer ‐ Logical (Gen1 and Gen2)}
+\begin{abstract}
+
+\end{abstract}
+\subsection{物理层概览}
+	\subsubsection{}
+	\subsubsection{}
+\subsection{发送逻辑详解（Gen1和Gen2）}
+\subsection{8b/10b编码}
+	\subsubsection{概述}
+	前两个版本的PCIe使用了8b/10b编码方式。每个Lane使用该编码方式使用10bit信号传输8bit数据。这种目前被
+	广泛用于串行通信如千兆以太网和光纤通信的编码方式于1984年被IBM注册为专利。
+	\subsubsection{特性}
+	使用8b/10b编码实现了以下的重要特性。
+	\begin{itemize}
+		\item{将时钟信息编码进入数据流}\\
+		该编码方式确保了在数据流中有足够的电平翻转使得接收方能在数据流中恢复出时钟，而不需要给单独提供时钟。
+		这避免了在并行数据总线中会出现的一些问题，如飞行时间（flight time）和时钟歪斜（skew）。这同样消除
+		了对高频时钟的需求，从而绕开了由此产生的其他问题如EMI和布线困难。\\
+		图中提供了一个对00h进行编码的范例，如图所示，8bit的数据被拆分成五段进行传输。8b/10b编码确保了数据流中
+		行程（run length）即连续的0或1的数量不超过五个。
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{11-15.png}
+			\caption{11-15 对8bit数据00h进行编码的范例}
+		\end{figure}
+		\item{保证DC平衡}\\
+		PCIe使用了交流耦合，通过在链路中直接放置电容，将信号中的直流部分驱除。这允许接收端和发送端有不同的共
+		模电压，可以降低设计难度，如在长距离传输中发射端和接收端无法获得相同的参考电压的情况。直流分量即共模
+		电压在链路工作中会由于充放电改变。一般来说，信号高速跳变使得这样的现象并不会对实际工作造成影响。但如果
+		数据流中出现了大比重的0或1，共模电压会偏移（DC Wander）。这样的偏移降低了接收端的信号完整性。为了进行
+		补偿，编码器会跟踪被发送的上个信号的极性偏差（disparity），极性偏差可以表征为正偏差（1比0多）、负偏差
+		（0比1多）和中性（0和1个数相同）。举个例子如果前一个信号是负偏差的，下一个发送的信号会使用更多的1。
+		\item{提高抗误码性能}
+		这种编码方式同样提高了系统对传输错误的查验能力。对于10bit的数据，共有1024种编码，但被编码的8bit数据
+		只有256种，为了保持直流平衡，每个字节有两种编码方式，发送哪一种取决于上个发送信号的disparity，所
+		以共需要512种编码。事实上许多中性的disparity只有一种编码方式，所以实际的占用并没有512种这么多。所以
+		多于一般的编码是空闲的，当它们被接收端接收时会被认为是非法信号。如果传输错误改变了一个信号的bit结构，
+		它将立刻被检测出来。
+	\end{itemize}
+	8b/10b编码的主要劣势在于它的性能开销。实际的传输性能会被降低百分之二十，因为发送了10bit但接收端实际收到的
+	是8bit，但于该编码方式的优秀特性相比，这些不可忽视的开销依旧是可以接受的。
+\subsubsection{10bit信号}
+	8bit并不是直接被转换成10bit，它被拆分成5bit译码至6bit的前半段和3bit译码至4bit的后半段。编码方式有助于我们
+	理解合法信号的生成，不遵守这些编码方式的信号会被认为是无效的。
+\begin{enumerate}
+\item{}比特流中从不包含连续的五个0或1，即便是跨单位的数据。
+\item{}每个10bit有以下几种可能 
+	\begin{enumerate}
+		\item {}四个0与五个1
+		\item {}四个1与五个0
+		\item {}五个0与五个1
+	\end{enumerate}
+\item{} 		
+\end{enumerate}
+
+
+\section{12 Physical Layer ‐ Logical (Gen3)}
+\begin{abstract}
+
+\end{abstract}
+\subsection{物理层概览}
+	\subsubsection{}
+	\subsubsection{}
+\subsection{发送逻辑详解（Gen1和Gen2）}
+
+\section{13 Physical Layer ‐ Electrical}
+\begin{abstract}
+本章描述了物理层Link
+\end{abstract}
+\subsection{物理层概览}
+	\subsubsection{}
+	\subsubsection{}
+\subsection{发送逻辑详解（Gen1和Gen2）}
+
+\appendix
+\section{Active State Power Management (ASPM)}
+ASPM是一个仅在D0电源模式下激活的硬件节能机制。进入或退出ASPM状态的转换由硬件根据具体实施标准进行，
+软件无法控制或观察此操作，这一模式仅能通过配置寄存器来激活或关闭。
+
+ASPM定义了两种不同的低功耗模式
+\subparagraph{L0s(standby state)}该模式提供了大量的电源节省但仍提供低启动和退出延迟。实现该特性的
+主要方法是将传输链路置于电气空闲状态。对该模式的支持在早期版本中都是默认提供的，在PCIe3.0中该模式
+是可选配置。
+\subparagraph{L1 ASPM}该模式是为了在能够接受与L0s相比更高的启动和退出延迟的情况下提供更好的电源节省。
+发送端和接收端同时进入空闲状态。对该模式的支持在所有PICe版本中都是可选的。
+
+\subsection{电气空闲状态}
+sadasdjk sajkd aj
+
+\section{SSC (Spread Spectrum Clocking)}
+\end{document}

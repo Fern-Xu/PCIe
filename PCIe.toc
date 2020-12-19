@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}11 Physical Layer ‐ Logical (Gen1 and Gen2)}{2}%
+\contentsline {subsection}{\numberline {1.1}物理层概览}{2}%
+\contentsline {subsubsection}{\numberline {1.1.1}}{2}%
+\contentsline {subsubsection}{\numberline {1.1.2}}{2}%
+\contentsline {subsection}{\numberline {1.2}发送逻辑详解（Gen1和Gen2）}{2}%
+\contentsline {subsection}{\numberline {1.3}8b/10b编码}{2}%
+\contentsline {subsubsection}{\numberline {1.3.1}概述}{2}%
+\contentsline {subsubsection}{\numberline {1.3.2}特性}{2}%
+\contentsline {subsubsection}{\numberline {1.3.3}10bit信号}{4}%
+\contentsline {section}{\numberline {2}12 Physical Layer ‐ Logical (Gen3)}{4}%
+\contentsline {subsection}{\numberline {2.1}物理层概览}{5}%
+\contentsline {subsubsection}{\numberline {2.1.1}}{5}%
+\contentsline {subsubsection}{\numberline {2.1.2}}{5}%
+\contentsline {subsection}{\numberline {2.2}发送逻辑详解（Gen1和Gen2）}{5}%
+\contentsline {section}{\numberline {3}13 Physical Layer ‐ Electrical}{5}%
+\contentsline {subsection}{\numberline {3.1}物理层概览}{5}%
+\contentsline {subsubsection}{\numberline {3.1.1}}{5}%
+\contentsline {subsubsection}{\numberline {3.1.2}}{5}%
+\contentsline {subsection}{\numberline {3.2}发送逻辑详解（Gen1和Gen2）}{5}%
+\contentsline {section}{\numberline {A}Active State Power Management (ASPM)}{5}%
+\contentsline {subparagraph}{L0s(standby state)}{5}%
+\contentsline {subparagraph}{L1 ASPM}{5}%
+\contentsline {subsection}{\numberline {A.1}电气空闲状态}{6}%
+\contentsline {section}{\numberline {B}SSC (Spread Spectrum Clocking)}{6}%
